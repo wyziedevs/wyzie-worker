@@ -1,0 +1,27 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "npx nitropack build",
+    "dev": "npx nitropack dev",
+    "format": "prettier --log-level warn --write \"src/**/*.{ts,json}\"",
+    "prepare": "npx nitropack prepare",
+    "preview": "npx nitropack preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "nitro": "3.0.1-alpha.2",
+    "nitropack": "latest",
+    "prettier": "3.3.3",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "h3": "^1.15.5",
+    "nitropack": "^2.13.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
