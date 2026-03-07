@@ -1,28 +1,69 @@
 <p align="center">
   <a href="https://sub.wyzie.ru/">
     <img src="https://i.postimg.cc/L5ppKYC5/cclogo.png" height="120">
-    <h1 align="center">Wyzie Subs</h1>
+    <h1 align="center">Wyzie Worker</h1>
   </a>
 </p>
 
-## A simple easy to use Subtitle Scraper API
+## Cloudflare Worker Proxy for Wyzie Subs API
+
+A lightweight [Nitro](https://nitro.build/)-based Cloudflare Worker that proxies requests to the [Wyzie Subs API](https://sub.wyzie.ru/), automatically injecting your API token.
 
 ### Features
-- **Simple**: Just send a request to the API with the TMDB or IMDB ID of the movie or TV show and get the subtitles for.
-- **Fast**: The API is hosted on a edge cloud provider with multiple proxies for spoofing requests (response time varies).
-- **Free**: The API is completely free to use and has no rate limits (don't abuse this please 🙏).
-- **Open-Source**: The API is open-source and you can host it yourself if you want to.
 
-[*Providers Status*](https://sub.wyzie.ru/status)
+- **Transparent Proxy**: Forwards all requests to `sub.wyzie.ru` with automatic API key injection
+- **Edge Deployment**: Built for Cloudflare Workers with minimal latency
+- **Simple Setup**: Just set your API token and deploy
 
-### Request Flow Chart
-![request flow chart](.github/flowchart.png)
+### Setup
 
-### Usage Example
+1. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
 
-Please note: the `id` url parameter can be used interchangable with either a TMDB ID or an IMDB ID. It checks for "tt" to determine if it's an IMDB ID or not. Using a TMDB ID is slower as we have to request the IMDB ID from TMDB first.
-<sup>
-  All parameters work with both TMDB and IMDB IDs, aswell as shows and movies.
-</sup>
+2. **Set your API token**
+   ```bash
+   export NITRO_API_TOKEN="your_api_key"
+   ```
 
-![image](https://github.com/user-attachments/assets/45dec134-defb-4a2b-b466-1ec656618ac7)
+3. **Development**
+   ```bash
+   pnpm dev
+   ```
+
+4. **Build for production**
+   ```bash
+   pnpm build
+   ```
+
+### Deployment
+
+Deploy to Cloudflare Workers:
+
+```bash
+pnpm build
+npx wrangler deploy .output/server/index.mjs
+```
+
+Set the `NITRO_API_TOKEN` secret in your Cloudflare dashboard or via Wrangler:
+```bash
+npx wrangler secret put NITRO_API_TOKEN
+```
+
+### Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `/*` | Proxies all requests to `sub.wyzie.ru` |
+| `/health` | Health check endpoint |
+
+### Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `NITRO_API_TOKEN` | Your Wyzie Subs API key (required) |
+
+### Related
+
+- [Wyzie Subs API](https://sub.wyzie.ru/) - The main subtitle scraper API
