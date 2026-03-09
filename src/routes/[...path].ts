@@ -1,6 +1,6 @@
 import { defineEventHandler, getQuery, readBody, getHeaders, setResponseHeaders } from "h3";
 
-const API_BASE = "https://sub.wyzie.ru";
+const API_BASE = "https://sub.wyzie.io";
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();

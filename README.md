@@ -1,6 +1,6 @@
 ## Cloudflare Worker Proxy for Wyzie API
 
-A lightweight [Nitro](https://nitro.build/)-based Cloudflare Worker that proxies requests to the [Wyzie Subs API](https://sub.wyzie.ru/), automatically injecting your API token.
+A lightweight [Nitro](https://nitro.build/)-based Cloudflare Worker that proxies requests to the [Wyzie Subs API](https://sub.wyzie.io/), automatically injecting your API token.
 
 ### Setup
 
@@ -42,7 +42,7 @@ npx wrangler secret put NITRO_API_TOKEN
 
 | Endpoint | Description |
 |----------|-------------|
-| `/*` | Proxies all requests to `sub.wyzie.ru` |
+| `/*` | Proxies all requests to `sub.wyzie.io` |
 | `/health` | Health check endpoint |
 
 ### Environment Variables
