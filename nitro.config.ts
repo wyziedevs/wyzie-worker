@@ -6,5 +6,6 @@ export default defineNitroConfig({
   compressPublicAssets: true,
   runtimeConfig: {
     apiToken: process.env.NITRO_API_TOKEN || "",
+    workerKey: process.env.NITRO_WORKER_KEY || "",
   },
 });
