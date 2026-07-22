@@ -14,7 +14,13 @@ export default defineEventHandler((event) => {
   if (url.pathname === "/health") return;
 
   const config = useRuntimeConfig();
-  if (!config.workerKey) return;
+  // Fail CLOSED. This proxy injects a privileged apiToken as the upstream key,
+  // so an unauthenticated request here would grant free, billed access to the
+  // upstream API. If workerKey isn't configured, reject everything (except
+  // /health, handled above) rather than silently disabling auth.
+  if (!config.workerKey) {
+    throw createError({ statusCode: 503, statusMessage: "Proxy not configured" });
+  }
 
   const authHeader = getHeader(event, "authorization") || "";
   const match = authHeader.match(/^bearer\s+(.+)$/i);
