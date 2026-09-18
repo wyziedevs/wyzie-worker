@@ -1,4 +1,11 @@
-import { defineEventHandler, getQuery, readBody, getHeaders, setResponseHeaders } from "h3";
+import {
+  defineEventHandler,
+  getQuery,
+  readBody,
+  getHeaders,
+  setResponseHeaders,
+  setResponseStatus,
+} from "h3";
 
 const API_BASE = "https://sub.wyzie.io";
 
@@ -36,6 +43,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const response = await fetch(targetUrl, fetchOptions);
+
+  // Forward the upstream status so 4xx/5xx (bad request, invalid key, rate limit) are not
+  // masked as 200.
+  setResponseStatus(event, response.status, response.statusText);
 
   setResponseHeaders(event, {
     "content-type": response.headers.get("content-type") || "application/json",

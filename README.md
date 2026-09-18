@@ -57,11 +57,11 @@ Authorization: Bearer your_worker_key
 
 Requests without a valid key will receive a `401 Unauthorized` response. The `/health` endpoint is public and does not require authentication.
 
-If `NITRO_WORKER_KEY` is not set, authentication is disabled and all requests are allowed.
+If `NITRO_WORKER_KEY` is not set, the worker fails closed: every request except `/health` is rejected with `503 Proxy not configured`. The proxy injects your API token upstream, so it never runs unauthenticated.
 
 ### Environment Variables
 
 | Variable | Description |
 |----------|-------------|
 | `NITRO_API_TOKEN` | Your Wyzie Subs API key (required) |
-| `NITRO_WORKER_KEY` | Secret key for authenticating requests to the worker (recommended) |
+| `NITRO_WORKER_KEY` | Secret key for authenticating requests to the worker (required; without it all proxy requests return 503) |
