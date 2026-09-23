@@ -7,5 +7,8 @@ export default defineNitroConfig({
   runtimeConfig: {
     apiToken: process.env.NITRO_API_TOKEN || "",
     workerKey: process.env.NITRO_WORKER_KEY || "",
+    // Optional browser mode: comma-separated origins allowed to call the proxy
+    // from the browser without the Bearer key (see README).
+    allowedOrigins: process.env.NITRO_ALLOWED_ORIGINS || "",
   },
 });

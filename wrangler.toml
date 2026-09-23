@@ -1,0 +1,19 @@
+# Deploy: `pnpm build && npx wrangler deploy` (builds .output/, then uploads it).
+name = "wyzie-worker"
+main = ".output/server/index.mjs"
+compatibility_date = "2026-03-07"
+
+# Two secrets, set once per Worker and never written into this file or exported
+# in the shell you build in (Nitro would inline them into the bundle):
+#
+#   npx wrangler secret put NITRO_API_TOKEN    # your Wyzie Subs API key; the proxy adds it upstream as ?key=
+#   npx wrangler secret put NITRO_WORKER_KEY   # the Bearer token your servers send (server-to-server mode)
+#
+# With neither NITRO_WORKER_KEY nor NITRO_ALLOWED_ORIGINS set, the proxy refuses
+# every request except /health (fails closed).
+
+# Optional browser mode: origins allowed to call the proxy straight from the
+# browser without the Bearer key. Read the README first: an allowlist stops other
+# websites, not scripts that fake the Origin header.
+# [vars]
+# NITRO_ALLOWED_ORIGINS = "https://example.com,https://www.example.com"
